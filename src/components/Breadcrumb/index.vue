@@ -33,7 +33,7 @@ export default {
       const first = matched[0]
 
       if (!this.isDashboard(first)) {
-        matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
+        matched = [].concat(matched)
       }
 
       this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
@@ -52,12 +52,13 @@ export default {
       return toPath(params)
     },
     handleLink(item) {
-      const { redirect, path } = item
-      if (redirect) {
-        this.$router.push(redirect)
-        return
-      }
-      this.$router.push(this.pathCompile(path))
+      // const { redirect, path } = item
+      // console.log(redirect);
+      // if (redirect) {
+      //   this.$router.push(redirect)
+      //   return
+      // }
+      // this.$router.push(this.pathCompile(path))
     }
   }
 }

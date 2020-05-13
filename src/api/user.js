@@ -8,11 +8,28 @@ export function login(data) {
   })
 }
 
+export function changePwd(data) {
+  return request({
+    url: '/user/update',
+    method: 'post',
+    data
+  })
+}
+
 export function getInfo(token) {
   return request({
     url: '/user/info',
     method: 'get',
-    params: { token }
+    params: {
+      token
+    }
+  })
+}
+
+export function getUserList() {
+  return request({
+    url: '/user/list',
+    method: 'get'
   })
 }
 

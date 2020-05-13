@@ -5,7 +5,8 @@ const state = {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  device: 'desktop'
+  device: 'desktop',
+  editBills: false
 }
 
 const mutations = {
@@ -25,6 +26,12 @@ const mutations = {
   },
   TOGGLE_DEVICE: (state, device) => {
     state.device = device
+  },
+  EDIT_BILL: state => {
+    state.editBills = true
+  },
+  CLOSE_EDIT_BILL: state => {
+    state.editBills = false
   }
 }
 

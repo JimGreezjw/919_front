@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: '三单要号系统',
 
   /**
    * @type {boolean} true | false
@@ -12,5 +12,7 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: false
+  sidebarLogo: false,
+  baseUrl: '/api'
+  // baseUrl: 'http://localhost:8080'
 }

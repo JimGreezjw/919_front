@@ -7,7 +7,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" class="user-avatar">
+          当前用户： <span>{{ userName }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -22,14 +22,35 @@
           <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>Docs</el-dropdown-item>
           </a> -->
-          <!-- <el-dropdown-item divided> -->
-            <el-dropdown-item>
-            <span style="display:block;" @click="logout">登出</span>
+          <el-dropdown-item>
+            <span style="display:block;" @click="showPwdDialog"><i class="el-icon-edit" />修改密码</span>
           </el-dropdown-item>
-        </el-dropdown-menu>
+          <el-dropdown-item divided>
+            <el-dropdown-item>
+              <span style="display:block;" @click="logout"><i class="el-icon-delete" />登出</span>
+            </el-dropdown-item>
+          </el-dropdown-item></el-dropdown-menu>
       </el-dropdown>
     </div>
+    <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
+      <el-form ref="ruleForm" :model="ruleForm" status-icon>
+        <el-form-item label="旧密码" :label-width="formLabelWidth" required>
+          <el-input v-model="ruleForm.oldPass" type="password" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="新密码" :label-width="formLabelWidth" required>
+          <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="确认密码" :label-width="formLabelWidth" required>
+          <el-input v-model="ruleForm.checkPass" type="password" autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
+
 </template>
 
 <script>
@@ -41,6 +62,18 @@ export default {
   components: {
     Breadcrumb,
     Hamburger
+  },
+  data() {
+    return {
+      userName: localStorage.getItem('userName'),
+      ruleForm: {
+        oldPass: '',
+        pass: '',
+        checkPass: ''
+      },
+      formLabelWidth: '120px',
+      dialogFormVisible: false
+    }
   },
   computed: {
     ...mapGetters([
@@ -54,7 +87,41 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
+      this.$store.commit('sdnum/SET_SDNUM', {})
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    showPwdDialog() {
+      this.dialogFormVisible = true
+      this.ruleForm = {
+        oldPass: '',
+        pass: '',
+        checkPass: ''
+      }
+    },
+    submitForm(formName) {
+      console.log(this.ruleForm)
+      if (!this.ruleForm.oldPass) {
+        alert('旧密码不允许为空')
+        return
+      }
+      if (!this.ruleForm.pass) {
+        alert('新密码不允许为空')
+        return
+      }
+      if (!this.ruleForm.checkPass || this.ruleForm.checkPass !== this.ruleForm.pass) {
+        alert('两次密码输入不一致')
+        return
+      }
+      this.$store.dispatch('user/changePwd', {
+        'id': localStorage.getItem('user'),
+        'oldPass': this.ruleForm.oldPass,
+        'pass': this.ruleForm.pass
+      }).then((res) => {
+        if (res.code === 200) {
+          this.$message(res.data)
+          this.dialogFormVisible = !this.dialogFormVisible
+        }
+      })
     }
   }
 }
@@ -89,6 +156,7 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
+    color:aqua;
 
     &:focus {
       outline: none;
@@ -118,6 +186,10 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
+      span {
+        color:blue;
+        font-weight:bold
+        }
 
         .user-avatar {
           cursor: pointer;

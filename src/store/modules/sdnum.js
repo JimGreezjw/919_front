@@ -1,4 +1,6 @@
-import { genSdnum } from '@/api/sdnum'
+import {
+  genSdnum
+} from '@/api/sdnum'
 
 const state = {
   sdnum: ''
@@ -12,13 +14,16 @@ const mutations = {
 
 const actions = {
   // user login
-  genSdnum({ commit }, info) {
-    const { typeId, userId } = info
+  genSdnum({
+    commit
+  }, info) {
     return new Promise((resolve, reject) => {
-      genSdnum({ typeId: typeId, userId: userId }).then(response => {
-        const { data } = response
+      genSdnum(info).then(response => {
+        const {
+          data
+        } = response
         commit('SET_SDNUM', data)
-        resolve()
+        resolve(response)
       }).catch(error => {
         reject(error)
       })
@@ -32,4 +37,3 @@ export default {
   mutations,
   actions
 }
-

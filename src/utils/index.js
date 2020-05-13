@@ -113,3 +113,19 @@ export const TableTypes = {
   'jjTable': 4,
   'hyRecord': 5
 }
+
+export const TableNames = {
+  1: '偏离单',
+  2: '更改单',
+  3: '外协传真',
+  4: '交接单',
+  5: '会议记录'
+}
+
+export const TableRoute = {
+  1: 'plTable',
+  2: 'ggTable',
+  3: 'wxFax',
+  4: 'jjTable',
+  5: 'hyRecord'
+}

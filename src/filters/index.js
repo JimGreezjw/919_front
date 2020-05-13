@@ -48,8 +48,27 @@ export function parseTimestamp(value) {
     m = m < 10 ? ('0' + m) : m
     let s = date.getSeconds()// 秒
     s = s < 10 ? ('0' + s) : s
-    return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s
+    return y + '-' + MM + '-' + d + ' ' + h + ':' + m
   }
+}
+
+export function parseFilePath(value) {
+  if (value == null) {
+    return ''
+  } else {
+    const pathList = value.split('/')
+    return pathList[pathList.length - 1]
+  }
+}
+
+export function statusFilterName(status) {
+  const statusMap = {
+    6: '未执行',
+    7: '执行中',
+    8: '完成',
+    9: '作废'
+  }
+  return statusMap[status]
 }
 
 /**
@@ -106,4 +125,14 @@ export function toThousandFilter(num) {
  */
 export function uppercaseFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+export function statusFilter(status) {
+  const statusMap = {
+    6: 'info',
+    7: '',
+    8: 'success',
+    9: 'danger'
+  }
+  return statusMap[status]
 }
