@@ -33,10 +33,20 @@
         <el-input v-model="form.content" type="textarea" :disabled="!isNewBill && !edit" />
       </el-form-item>
       <el-form-item v-if="isNewBill || edit" label="文件上传">
-        <el-upload
+        <!-- <el-upload
           ref="upload"
           class="upload-demo"
           action="/api/upload/"
+          multiple
+          :limit="1"
+          :on-exceed="handleExceed"
+          :file-list="fileList"
+          :on-success="fileUpSuccess"
+        > -->
+        <el-upload
+          ref="upload"
+          class="upload-demo"
+          action="http://localhost:8080/upload/"
           multiple
           :limit="1"
           :on-exceed="handleExceed"
@@ -178,7 +188,7 @@ export default {
       }
     },
     fileUpSuccess(res) {
-      console.log(111111);
+      console.log(111111)
       if (res.code === 200) {
         this.realFilePath = res.data
       }

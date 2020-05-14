@@ -104,6 +104,15 @@ export const constantRoutes = [{
       title: '会议记录',
       icon: 'icon'
     }
+  },
+  {
+    path: 'codeRule',
+    name: 'codeRule',
+    component: () => import('@/views/codeRule/index'),
+    meta: {
+      title: '三单定义规则',
+      icon: 'edit'
+    }
   }
 
   ]

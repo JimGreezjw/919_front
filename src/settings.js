@@ -13,6 +13,6 @@ module.exports = {
    * @description Whether show the logo in sidebar
    */
   sidebarLogo: false,
-  baseUrl: '/api'
-  // baseUrl: 'http://localhost:8080'
+  // baseUrl: '/api'
+  baseUrl: 'http://localhost:8080'
 }
